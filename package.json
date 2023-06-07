@@ -1,5 +1,5 @@
 {
-  "homepage":"https://kaneki081.github.io/ts-rehab",
+  "homepage": "https://kaneki081.github.io/ts-rehab",
   "name": "ts-rehab",
   "version": "0.1.0",
   "private": true,
@@ -23,6 +23,7 @@
     "lucide-react": "^0.236.0",
     "next": "13.4.4",
     "postcss": "8.4.24",
+    "radix-ui": "^1.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-fakers": "^1.0.3-rc1",
