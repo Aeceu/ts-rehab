@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FaBars, FaTimes, FaUser } from "react-icons/fa";
 import DarkModeToggle from "../DarkModeToggle/DarkModeToggle";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 const links = [
   {
@@ -60,28 +61,27 @@ const NavBar = () => {
         ))}
       </ul>
       
-      {/* Mobile Navigation Bar  */}
-      {openNav && 
-       <ul
-       className={"flex flex-col bg-[#efefef] text-black shadow-xl justify-between items-center p-4 rounded-lg gap-4 absolute right-[3%] top-[5%] z-10 "
-       }
-     >
-      
-       <FaTimes size="1.5rem" onClick={handleNav} className="lg:hidden flex" />
-       {links.map((link) => (
-         <Link key={link.id} href={link.url}>
-           {link.title}
-         </Link>
-       ))}
-     </ul>}
 
-     
       <DarkModeToggle/>
-      <div className="rounded-full shadow-md flex items-center p-2 justify-center relative">
-      <FaUser size="2rem" onClick={handleNav} className="lg:hidden flex " />
-      </div>
 
-      
+      {/* Mobile view */}
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+        <div className="rounded-full shadow-md lg:hidden flex items-center p-2 justify-center relative">
+          <FaBars size="2rem" onClick={handleNav} className=" " />
+        </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-[100px] ">
+        {links.map((link) => (
+          <DropdownMenuItem key={link.id} >
+            <Link  href={link.url} className="text-center w-full">
+              {link.title}
+            </Link>
+          </DropdownMenuItem>
+       ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
     </nav>
   )
 }

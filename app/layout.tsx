@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider>
-      <div className="w-full h-full min-h-screen flex flex-col justify-between items-center overflow-x-hidden  mx-auto my-0 px-0 sm:px-[60px]">
+      <div className="w-full h-full min-h-screen flex flex-col justify-between items-center overflow-x-hidden  mx-auto my-0 px-0">
             <NavBar />
             {children}
             <Footer />
