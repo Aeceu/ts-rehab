@@ -48,14 +48,14 @@ export default  function TableTask({tasks}:{tasks:any[]}) {
             <TableCell>
               <Dialog>
                 <DialogTrigger asChild>
-                  <h1 className="p-4 cursor-pointer">...</h1>
+                  <div className="p-4 cursor-pointer">...</div>
                 </DialogTrigger>
                 <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
                   <DialogHeader>
                     <DialogTitle className="py-2 text-2xl">{post.title}</DialogTitle>
                   </DialogHeader>
                   <Separator/>
-                  <Textarea className=" h-40">{post.description}</Textarea>
+                  <Textarea className=" h-40" defaultValue={post.description}/>
                 </DialogContent>
               </Dialog>
             </TableCell>
