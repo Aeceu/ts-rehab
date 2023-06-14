@@ -11,7 +11,7 @@ import TableTask from '@/components/Table'
 import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs'
 import {Graph} from '@/components/Graph'
-import { john_invoices, jose_invoices, john_data,jose_data } from '@/Data/TableData';
+import { john_invoices, jose_invoices, marie_invoices } from '@/Data/TableData';
 
 type User = {
   name: string;
@@ -26,23 +26,23 @@ type User = {
 };
 
 const dashboard = () => {
-  const users:User[] = [...jose_invoices, ...john_invoices];
+  const users:User[] = [...jose_invoices, ...john_invoices,...marie_invoices];
 
-  const [currentuser,setCurrentUser] = useState<number|null>(null);
-  const [selectedUser,setSelectedUser] = useState<number|null>(null);
+  const [currentuser,setCurrentUser] = useState<number|null>(0);
+  const [selectedUser,setSelectedUser] = useState<number|null>(0);
   function handleClick(index:any){
     setCurrentUser(index);
   }
 
   return (
-    <div className='w-full max-w-[1600px] flex flex-col gap-4 p-4'>
-      <header className='flex gap-4'>
+    <div className='w-full max-w-[1600px] flex flex-col gap-8 p-4'>
+      <header className='flex gap-4 border-[1px] border-opacity-10 border-slate-400 shadow-md p-4 rounded-md'>
         <h1 className='text-3xl font-bold tracking-tight'>Dashboard</h1>
       </header>
       <main className='flex flex-col gap-4'>
         {/* Cards */}
         <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
-          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md'>
+          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader>
               <CardTitle>
                 Physical Therapy
@@ -52,17 +52,17 @@ const dashboard = () => {
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus eum eligendi, repellendus distinctio earum repellat voluptatum voluptate, corrupti quas quaerat enim reprehenderit nobis est reiciendis nemo? Magnam, reiciendis nulla.</p>
             </CardContent>
           </Card>
-          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md'>
+          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader>
               <CardTitle>
-                Physical Therapy
+                Mental Therapy
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus eum eligendi, repellendus distinctio earum repellat voluptatum voluptate, corrupti quas quaerat enim reprehenderit nobis est reiciendis nemo? Magnam, reiciendis nulla.</p>
             </CardContent>
           </Card>
-          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md'>
+          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader>
               <CardTitle>
                 Physical Therapy
@@ -72,7 +72,7 @@ const dashboard = () => {
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus eum eligendi, repellendus distinctio earum repellat voluptatum voluptate, corrupti quas quaerat enim reprehenderit nobis est reiciendis nemo? Magnam, reiciendis nulla.</p>
             </CardContent>
           </Card >
-          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md'>
+          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader>
               <CardTitle>
                 Physical Therapy
@@ -92,7 +92,7 @@ const dashboard = () => {
               <TabsTrigger value='graph'>Graph</TabsTrigger>
             </TabsList>
             <TabsContent value='task'>
-              { currentuser !== null && 
+              {currentuser !== null && 
               <TableTask tasks={users[currentuser].Post} />
               }
             </TabsContent>
@@ -103,7 +103,7 @@ const dashboard = () => {
             </TabsContent>
           </Tabs>
           </div>
-          <Card className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md'>
+          <Card className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader>
               <CardTitle>
                 Users
@@ -118,7 +118,7 @@ const dashboard = () => {
                   setSelectedUser(index);
                 }}
                 key={index} 
-                className={`w-full flex justify-between items-center p-4  gap-4 bg-opacity-70 hover:bg-slate-600 ${selectedUser === index ? 'bg-slate-300' : " "}`}
+                className={`w-full flex justify-between items-center p-4  gap-4 bg-opacity-70 border-opacity-10 hover:bg-slate-300 cursor-pointer ${selectedUser === index ? 'bg-slate-300' : " "}`}
                 >
                 <h1 className='text-1xl font-bold '>{user.name}</h1>
                 <h1 className='text-[.8em] text-gray-500'>{user.email}</h1>

@@ -119,7 +119,56 @@ export const john_data:UsersGraph = [
   },
 ]
 
-
+export const marie_data:UsersGraph = [
+  {
+    name: "Jan",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Feb",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Mar",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Apr",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "May",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jun",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Jul",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Aug",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Sep",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Oct",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Nov",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+  {
+    name: "Dec",
+    total: Math.floor(Math.random() * 5000) + 1000,
+  },
+]
 
 
 export const jose_invoices:Users = [
@@ -141,6 +190,12 @@ export const jose_invoices:Users = [
         description : "My second task is to make and give time to my family",
         date:"February 21, 2023",
       },
+      {
+        postId:'2',
+        title: "My third task",
+        description: "My third task is to consistently go to therapy",
+        date:"March 03, 2023"
+      }
     ],
   },
 ]
@@ -165,5 +220,16 @@ export const john_invoices:Users = [
         date:"December 21, 2023",
       },
     ]
+  },
+]
+
+export const marie_invoices:Users = [
+  {
+    name:"Marie Ann L. Jull",
+    email:"marie.ann123@gmail.com",
+    Graph: marie_data,
+    Post:
+    [
+    ],
   },
 ]

@@ -28,7 +28,7 @@ export default  function TableTask({tasks}:{tasks:any[]}) {
 
   return (
 <div className="flex flex-col w-full">
-    <Table className="w-full h-[300px] bg-inherit text-inherit border-[1px] border-slate-300 shadow-md" >
+    <Table className="w-full h-[300px] bg-inherit text-inherit border-[1px] border-slate-300 shadow-md border-opacity-10" >
       <TableCaption> Table of task</TableCaption>
       <TableHeader >
         <TableRow >
@@ -40,8 +40,7 @@ export default  function TableTask({tasks}:{tasks:any[]}) {
       </TableHeader>
       <TableBody className="bg-inherit text-inherit">
       
-      {
-        datas.map((post:any,postId:any)=>(
+      {datas ? datas.map((post:any,postId:any)=>(
           <TableRow key={postId} className="">
             <TableCell><Checkbox className="bg-white"/></TableCell>
             <TableCell>{post.title}</TableCell>
@@ -62,6 +61,8 @@ export default  function TableTask({tasks}:{tasks:any[]}) {
             <TableCell>{post.date}</TableCell>
         </TableRow>
         ))
+        :
+        <div>Nothing to see here...</div>
       }
 
 
