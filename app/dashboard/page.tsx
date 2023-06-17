@@ -90,7 +90,7 @@ const dashboard = () => {
           
         </div>
         {/* Datas */}
-        <div className='flex gap-4 lg:flex-row flex-col'>
+        <div className='flex gap-4 lg:flex-row flex-col-reverse'>
           <div className='w-full lg:w-2/3 flex flex-col gap-4'>
           <Tabs defaultValue="task" className='bg-inherit text-inherit flex flex-col gap-2'>
             <TabsList className='bg-inherit text-inherit border-[1px] border-slate-400 w-max'>
