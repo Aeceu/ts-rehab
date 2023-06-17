@@ -32,7 +32,12 @@ const links = [
     url: "/contact",
   },
   {
-    id: 6,
+    id:6,
+    title:"Resources",
+    url:"/resources"
+  },
+  {
+    id: 7,
     title: "Dashboard",
     url: "/dashboard",
   },
@@ -45,7 +50,7 @@ const NavBar = () => {
   }
   return (
     <nav className="w-full flex justify-between items-center p-8 shadow-md">
-      <Link href="/" className="text_color font-semibold text-[25px]">
+      <Link href="/" className="text_color font-semibold text-[25px] lg:inline hidden">
         Rehabify
       </Link>
       {/* Desktop Navigation Bar */}

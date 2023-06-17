@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import {
   Card,
   CardContent,
@@ -12,6 +12,10 @@ import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs'
 import {Graph} from '@/components/Graph'
 import { john_invoices, jose_invoices, marie_invoices } from '@/Data/TableData';
+import Image from 'next/image'
+import Link from 'next/link'
+import { cn } from '@/lib/utils'
+import { buttonVariants } from '@/components/ui/button'
 
 type User = {
   name: string;
@@ -28,8 +32,8 @@ type User = {
 const dashboard = () => {
   const users:User[] = [...jose_invoices, ...john_invoices,...marie_invoices];
 
-  const [currentuser,setCurrentUser] = useState<number|null>(0);
-  const [selectedUser,setSelectedUser] = useState<number|null>(0);
+  const [currentuser,setCurrentUser] = useState<number|null>(null);
+  const [selectedUser,setSelectedUser] = useState<number|null>(null);
   function handleClick(index:any){
     setCurrentUser(index);
   }
@@ -37,51 +41,53 @@ const dashboard = () => {
   return (
     <div className='w-full max-w-[1600px] flex flex-col gap-8 p-4'>
       <header className='flex gap-4 border-[1px] border-opacity-10 border-slate-400 shadow-md p-4 rounded-md'>
-        <h1 className='text-3xl font-bold tracking-tight'>Dashboard</h1>
+        <h1 className='text-3xl font-bold tracking-tight text_color'>Dashboard</h1>
       </header>
       <main className='flex flex-col gap-4'>
         {/* Cards */}
-        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
-          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
+        <div className='grid gap-3 md:grid-cols-1 lg:grid-cols-3'>
+          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10 relative rounded-md'>
             <CardHeader>
               <CardTitle>
-                Physical Therapy
+                Physical and Mental Therapy
               </CardTitle>
-            </CardHeader>
+            </CardHeader> 
             <CardContent>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus eum eligendi, repellendus distinctio earum repellat voluptatum voluptate, corrupti quas quaerat enim reprehenderit nobis est reiciendis nemo? Magnam, reiciendis nulla.</p>
+            <p>Addresses both the physical and mental aspects of recovery and reintegration. It helps restore physical function, manage pain, and improve overall well-being, while also providing a safe space to address addiction and mental health challenges, equipping individuals with coping strategies and fostering emotional well-being.</p>
             </CardContent>
           </Card>
-          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
-            <CardHeader>
-              <CardTitle>
-                Mental Therapy
+
+          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10 relative'>
+            <CardContent className='w-full h-full flex flex-col justify-center items-start gap-16 py-8 relative'>
+            <Image
+            alt='image'
+            src="/contact.jpg"
+            fill
+            className='object-center object-cover rounded-md'/>
+              <CardTitle className=' z-10 w-full text-center md:text-1xl lg:text-2xl text-white font-semibold'>
+                We, at Rehabify can help you throughout your journey
               </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus eum eligendi, repellendus distinctio earum repellat voluptatum voluptate, corrupti quas quaerat enim reprehenderit nobis est reiciendis nemo? Magnam, reiciendis nulla.</p>
+              <CardDescription className='z-10 w-full flex gap-8 justify-center items-center'>
+                <Link href="/contact" className={cn(buttonVariants(),"bg-[#eb4a2e] hover:bg-[tomato]")}>Contact us</Link>
+                <Link href="/about" className={cn(buttonVariants()," bg-blue-700 hover:bg-blue-600")}>About us</Link>
+              </CardDescription>
             </CardContent>
           </Card>
+
+
           <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader>
               <CardTitle>
-                Physical Therapy
+                Speech and Occupational Therapy
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus eum eligendi, repellendus distinctio earum repellat voluptatum voluptate, corrupti quas quaerat enim reprehenderit nobis est reiciendis nemo? Magnam, reiciendis nulla.</p>
+            <p>Combines speech therapy and occupational therapy to support recovery and successful reintegration. It improves communication skills, addressing speech and language difficulties caused by substance abuse. Additionally, it helps individuals develop life skills, regain independence, and find purpose, enhancing functional abilities and facilitating successful reintegration into the community.</p>
             </CardContent>
           </Card >
-          <Card className='text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
-            <CardHeader>
-              <CardTitle>
-                Physical Therapy
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus eum eligendi, repellendus distinctio earum repellat voluptatum voluptate, corrupti quas quaerat enim reprehenderit nobis est reiciendis nemo? Magnam, reiciendis nulla.</p>
-            </CardContent>
-          </Card>
+
+          
+          
         </div>
         {/* Datas */}
         <div className='flex gap-4 lg:flex-row flex-col'>
