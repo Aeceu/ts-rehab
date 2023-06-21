@@ -319,9 +319,4 @@ const dashboard =  () => {
     </div>
   )
 }
-
-export default dashboard
-<<<<<<< HEAD
-
-=======
->>>>>>> 89c56a4929f434a3ca0efb7844bf8b96536dc0bc
+export default dashboard;
