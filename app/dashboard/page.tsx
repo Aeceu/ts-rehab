@@ -1,5 +1,5 @@
 "use client"
-import React, {useState } from 'react'
+import React, {useState,useEffect} from 'react'
 import {
   Card,
   CardContent,
@@ -7,36 +7,128 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import TableTask from '@/components/Table'
-import { Separator } from '@/components/ui/separator'
 import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs'
-import {Graph} from '@/components/Graph'
-import { john_invoices, jose_invoices, marie_invoices } from '@/Data/TableData';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
+import TableTask from '@/components/Table'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
-type User = {
-  name: string;
-  email: string;
-  Graph:any[];
-  Post: {
-    postId: string;
-    title: string;
-    description: string;
-    date: string;
-  }[];
+
+
+
+
+async function getData() {
+  // fetch data from our api route.
+  const res = await fetch("http://localhost:3000/api/tasks",{
+    cache:"no-store",
+  });
+  if (!res.ok){
+    throw new Error("Failed to fetch data");
+  }
+  return res.json();
+}
+
+const dashboard =  () => {
+  const [currentuser,setCurrentUser] = useState<any>(null);
+  const [currentdesc,setCurrentDesc] = useState<any>(null);
+  const [Post, setPost] = useState({
+    title:"",
+    description:""
+  });
+  const [datas, setDatas] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getData();
+        setDatas(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const handleClick = (index: any) => {
+    setCurrentUser(index);
+  };
+
+  const handleNewDataSubmit = async (e:React.FormEvent) =>{
+    let name = currentuser.name;
+    e.preventDefault();
+    const res = await fetch("http://localhost:3000/api/tasks",{
+      method:"POST",
+      headers:{
+        "Content-type":"application/json",
+      },
+      body:JSON.stringify({
+        name,
+        Post
+      })
+    })
+    setPost({title:"",description:""});
+    window.location.reload();
+  }
+
+  const handleUpdateData = async (id:any,title:String,description:String)=>{
+    try {
+      // Add the correct URL for the PUT request
+      const res = await fetch(`http://localhost:3000/api/tasks`,{
+         method:"PUT",
+         headers:{
+            "Content-type":"application/json",
+         },
+         // Pass in the properties as a single object in the request body
+         body: JSON.stringify({ id, title, description })
+      })
+      const data = await res.json();
+      // Update the state with the new data
+      setPost({ title: data.title, description: data.description });
+   } catch (error) {
+      console.error(error);
+   } 
+   window.location.reload();
+   
 };
 
-const dashboard = () => {
-  const users:User[] = [...jose_invoices, ...john_invoices,...marie_invoices];
-
-  const [currentuser,setCurrentUser] = useState<number|null>(null);
-  const [selectedUser,setSelectedUser] = useState<number|null>(null);
-  function handleClick(index:any){
-    setCurrentUser(index);
-  }
+// const  deleteData = async (id : string) => {
+//   try {
+//     console.log(id);
+    
+//     const res = await fetch ("http://localhost:3000/api/tasks",{
+//       method:"DELETE",
+//       headers:{
+//         "Content-type":"application/json"
+//       },
+//       body: JSON.stringify({id})
+//     })
+//     if (res.status === 200) {
+//       const data = await res.json();
+//       console.log("Deleted data:", data);
+//     } else {
+//       console.error(`DELETE request failed with status ${res.status}`);
+//     }
+//   } catch (error) {
+//     console.error(error);
+//   }
+//   // window.location.reload();
+// };
 
   return (
     <div className='w-full max-w-[1600px] flex flex-col gap-8 p-4'>
@@ -98,16 +190,104 @@ const dashboard = () => {
               <TabsTrigger value='graph'>Graph</TabsTrigger>
             </TabsList>
             <TabsContent value='task'>
-              {currentuser !== null && 
-              <TableTask tasks={users[currentuser].Post} />
-              }
+              <div className="flex flex-col w-full">
+                <Table className="w-full h-[300px] bg-inherit text-inherit border-[1px] border-slate-300 shadow-md border-opacity-10" >
+                  <TableHeader >
+                    <TableRow >
+                      <TableHead className="">Check</TableHead>
+                      <TableHead className="">Title</TableHead>
+                      <TableHead className="w-1/2">Description</TableHead>
+                      <TableHead className="w-1/4">
+                        Edit
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody className="bg-inherit text-inherit">
+                  {currentuser && currentuser.Post.map((post:any)=>{
+                    return(
+                      <TableRow key={post._id} className="">
+                        <TableCell><Checkbox className="bg-white"/></TableCell>
+                        <TableCell>{post.title}</TableCell>
+                        <TableCell>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <h1 className="p-4 cursor-pointer">...</h1>
+                            </DialogTrigger>
+                            <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
+                              <DialogHeader>
+                                <DialogTitle className="py-2 text-2xl">{post.title}</DialogTitle>
+                              </DialogHeader>
+                              <Separator/>
+                              <DialogDescription className='py-8 text-inherit'>
+                                {post.description}
+                              </DialogDescription>
+                            </DialogContent>
+                          </Dialog>
+                        </TableCell>
+                        <TableCell className='flex gap-8 h-full w-full items-center'>
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button>Edit</Button>   
+                            </DialogTrigger>
+                            <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
+                                <DialogHeader>
+                                <Textarea 
+                                  className=" h-5" 
+                                  defaultValue={post.title + Post.title}
+                                  onChange={(e) =>
+                                    setPost({ ...Post, title:  e.target.value })}/>
+                                </DialogHeader>
+                                <Separator/>
+                                <Textarea
+                                defaultValue={post.description + Post.description}
+                                onChange={(e) =>
+                                  setPost({ ...Post, description:  e.target.value })} />
+                                  <Button onClick={()=>handleUpdateData(post._id,Post.title,Post.description)}>Update</Button>
+                              </DialogContent>
+                          </Dialog>
+                        <Button onClick={()=>console.log("DELETED.")
+                        }>Delete</Button>
+                        </TableCell>
+                      </TableRow>
+                      )})}  
+                  </TableBody>
+                </Table>
+              </div>
             </TabsContent>
             <TabsContent value='graph'>
-            { currentuser !== null && 
-              <Graph data={users[currentuser].Graph}/>
-              }
             </TabsContent>
           </Tabs>
+          
+            <Dialog>
+              <DialogTrigger asChild>                
+                <Button className='max-w'>add new task</Button>
+              </DialogTrigger>
+              <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
+                <DialogHeader>
+                  <DialogTitle className="py-2 text-2xl">
+                  <Textarea
+                  value={Post.title}
+                  onChange={(e) => setPost({ ...Post, title: e.target.value })}
+                  className=" h-5"/>
+                  </DialogTitle>
+                </DialogHeader>
+                <Separator/>
+                <Textarea 
+                className=" h-40" 
+                value={Post.description}
+          onChange={(e) =>
+            setPost({ ...Post, description: e.target.value })}/>
+                <DialogFooter>
+                <Button 
+                onClick={handleNewDataSubmit
+                }
+                variant="outline" 
+                className='max-w'>add</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+
           </div>
           <Card className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader>
@@ -117,22 +297,23 @@ const dashboard = () => {
             </CardHeader>
             <Separator/>
             <CardContent className='p-0'>
-            {users.map((user,index)=>(
-                <div 
-                onClick={()=> {
-                  handleClick(index);
-                  setSelectedUser(index);
-                }}
-                key={index} 
-                className={`w-full flex justify-between items-center p-4  gap-4 bg-opacity-70 border-opacity-10 hover:bg-slate-300 cursor-pointer ${selectedUser === index ? 'bg-slate-300' : " "}`}
-                >
-                <h1 className='text-1xl font-bold '>{user.name}</h1>
-                <h1 className='text-[.8em] text-gray-500'>{user.email}</h1>
-                </div>
+
+            {/* Display all the users in the MongoDB dabase name datas. */}
+            {datas.map((data:any)=>(
+              <div
+              className="w-full flex justify-between items-center p-4  gap-4 bg-opacity-70 border-opacity-10 hover:bg-slate-300 cursor-pointer"
+              key={data._id}
+              onClick={()=>{
+              handleClick(data);
+              }}
+              >
+                <h1 className='text-1xl font-bold '>{data.name}</h1>
+                <h1 className='text-[.8em] text-gray-500'>{data.email}</h1>
+              </div>
             ))}
             </CardContent>
-          
           </Card>
+          
         </div>
       </main>
     </div>
@@ -140,3 +321,4 @@ const dashboard = () => {
 }
 
 export default dashboard
+
