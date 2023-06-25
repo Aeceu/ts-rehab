@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import DarkModeToggle from "../DarkModeToggle/DarkModeToggle";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
@@ -33,11 +33,6 @@ const links = [
   },
   {
     id:6,
-    title:"Resources",
-    url:"/resources"
-  },
-  {
-    id: 7,
     title: "Dashboard",
     url: "/dashboard",
   },
@@ -80,7 +75,7 @@ const NavBar = () => {
         {links.map((link) => (
           <DropdownMenuItem key={link.id} >
             <Link  href={link.url} className="text-center w-full">
-              {link.title}
+              {link.title} 
             </Link>
           </DropdownMenuItem>
        ))}

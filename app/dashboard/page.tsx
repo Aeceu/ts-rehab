@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -11,7 +12,6 @@ import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs'
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -24,10 +24,10 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import TableTask from '@/components/Table'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { FaTrash } from 'react-icons/fa'
+import { Label } from '@/components/ui/label'
 
 
 
@@ -46,89 +46,108 @@ async function getData() {
 
 const dashboard =  () => {
   const [currentuser,setCurrentUser] = useState<any>(null);
-  const [currentdesc,setCurrentDesc] = useState<any>(null);
-  const [Post, setPost] = useState({
-    title:"",
-    description:""
-  });
+  const [Post, setPost] = useState({title:"", description:""});
   const [datas, setDatas] = useState<any[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getData();
-        setDatas(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
+  const [newuser, setNewUser] = useState<String>('');
+  const [newemail,setNewEmail] = useState<String>('');
 
-  const handleClick = (index: any) => {
-    setCurrentUser(index);
-  };
 
-  const handleNewDataSubmit = async (e:React.FormEvent) =>{
-    let name = currentuser.name;
-    e.preventDefault();
-    const res = await fetch("http://localhost:3000/api/tasks",{
-      method:"POST",
-      headers:{
-        "Content-type":"application/json",
-      },
-      body:JSON.stringify({
-        name,
-        Post
-      })
-    })
-    setPost({title:"",description:""});
-    window.location.reload();
-  }
-
-  const handleUpdateData = async (id:any,title:String,description:String)=>{
+useEffect(() => {
+  const fetchData = async () => {
     try {
-      // Add the correct URL for the PUT request
+      const data = await getData();
+      setDatas(data);
+      
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  fetchData();
+  
+}, []);
+
+const handleClick = (index: any) => {
+  setCurrentUser(index);
+};
+
+const handleNewDataSubmit = async (e:React.FormEvent,userID:String) =>{
+  let name = currentuser.name;
+  e.preventDefault();
+  const res = await fetch(`http://localhost:3000/api/tasks/${userID}`,{
+    method:"POST",
+    headers:{
+      "Content-type":"application/json",
+    },
+    body:JSON.stringify({
+      name,
+      Post
+    })
+  })
+  setPost({title:"",description:""});
+  window.location.reload();
+}
+
+const handleUpdateData = async (id:any,title:String,description:String)=>{
+    try 
+    {
       const res = await fetch(`http://localhost:3000/api/tasks`,{
          method:"PUT",
-         headers:{
+         headers:
+          {
             "Content-type":"application/json",
-         },
-         // Pass in the properties as a single object in the request body
-         body: JSON.stringify({ id, title, description })
-      })
+          },
+         body: JSON.stringify({ id, title, description })})
       const data = await res.json();
-      // Update the state with the new data
       setPost({ title: data.title, description: data.description });
-   } catch (error) {
+   } 
+   catch (error) 
+   {
       console.error(error);
    } 
    window.location.reload();
    
 };
 
-// const  deleteData = async (id : string) => {
-//   try {
-//     console.log(id);
-    
-//     const res = await fetch ("http://localhost:3000/api/tasks",{
-//       method:"DELETE",
-//       headers:{
-//         "Content-type":"application/json"
-//       },
-//       body: JSON.stringify({id})
-//     })
-//     if (res.status === 200) {
-//       const data = await res.json();
-//       console.log("Deleted data:", data);
-//     } else {
-//       console.error(`DELETE request failed with status ${res.status}`);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-//   // window.location.reload();
-// };
+const deleteData = async (userID:String,postID:String) => {
+  console.log("PARENT ID: ", userID);
+  console.log("CHILD ID: ", postID);
+  try {
+    const res = await fetch(`http://localhost:3000/api/tasks/${userID}/${postID}`, {
+      method: "DELETE"
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  window.location.reload();
+};
+
+const deleteUser = async (userID:String)=>{
+  try {
+    const res = await fetch(`http://localhost:3000/api/tasks/${userID}`, {
+      method:"DELETE"
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  window.location.reload();
+};
+
+const handleNewUser = async (username:String,email:String) => {
+  try {
+    const res = await fetch("http://localhost:3000/api/tasks",{
+      method:"POST",
+      headers:
+      {
+        "Content-type":"application/json"
+      },
+      body:JSON.stringify({username,email})
+    })
+  } catch (error) {
+    console.error(error);
+  }
+  window.location.reload();
+}
 
   return (
     <div className='w-full max-w-[1600px] flex flex-col gap-8 p-4'>
@@ -181,9 +200,12 @@ const dashboard =  () => {
           
           
         </div>
+
         {/* Datas */}
         <div className='flex gap-4 lg:flex-row flex-col-reverse'>
+
           <div className='w-full lg:w-2/3 flex flex-col gap-4'>
+          {/*  Table that display the todo list of the user */}
           <Tabs defaultValue="task" className='bg-inherit text-inherit flex flex-col gap-2'>
             <TabsList className='bg-inherit text-inherit border-[1px] border-slate-400 w-max'>
               <TabsTrigger value='task'>Tasks</TabsTrigger>
@@ -194,19 +216,15 @@ const dashboard =  () => {
                 <Table className="w-full h-[300px] bg-inherit text-inherit border-[1px] border-slate-300 shadow-md border-opacity-10" >
                   <TableHeader >
                     <TableRow >
-                      <TableHead className="">Check</TableHead>
                       <TableHead className="">Title</TableHead>
                       <TableHead className="w-1/2">Description</TableHead>
-                      <TableHead className="w-1/4">
-                        Edit
-                      </TableHead>
+                      <TableHead className="w-1/4">Edit</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody className="bg-inherit text-inherit">
                   {currentuser && currentuser.Post.map((post:any)=>{
                     return(
                       <TableRow key={post._id} className="">
-                        <TableCell><Checkbox className="bg-white"/></TableCell>
                         <TableCell>{post.title}</TableCell>
                         <TableCell>
                           <Dialog>
@@ -245,11 +263,10 @@ const dashboard =  () => {
                                   <Button onClick={()=>handleUpdateData(post._id,Post.title,Post.description)}>Update</Button>
                               </DialogContent>
                           </Dialog>
-                        <Button onClick={()=>console.log("DELETED.")
+                        <Button onClick={()=>deleteData(currentuser._id, post._id)
                         }>Delete</Button>
                         </TableCell>
-                      </TableRow>
-                      )})}  
+                      </TableRow>)})}
                   </TableBody>
                 </Table>
               </div>
@@ -258,7 +275,8 @@ const dashboard =  () => {
             </TabsContent>
           </Tabs>
           
-            <Dialog>
+          {/* Input box user can use to add task */}
+          {currentuser &&  <Dialog>
               <DialogTrigger asChild>                
                 <Button className='max-w'>add new task</Button>
               </DialogTrigger>
@@ -279,39 +297,64 @@ const dashboard =  () => {
             setPost({ ...Post, description: e.target.value })}/>
                 <DialogFooter>
                 <Button 
-                onClick={handleNewDataSubmit
+                onClick={(e)=>handleNewDataSubmit(e,currentuser._id)
                 }
                 variant="outline" 
                 className='max-w'>add</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-
-
+            
+          }
+          {/* Card that display the users */}
           </div>
-          <Card className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
-            <CardHeader>
+          <Card className='w-full flex flex-col justify-between lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
+            <CardHeader className='w-1/4'>
               <CardTitle>
                 Users
               </CardTitle>
             </CardHeader>
             <Separator/>
-            <CardContent className='p-0'>
-
-            {/* Display all the users in the MongoDB dabase name datas. */}
+            <CardContent className="w-full h-full ">
+            {/* Display all the users in the MongoDB database name datas. */}
             {datas.map((data:any)=>(
               <div
-              className="w-full flex justify-between items-center p-4  gap-4 bg-opacity-70 border-opacity-10 hover:bg-slate-300 cursor-pointer"
+              className="flex justify-between items-center py-2 bg-opacity-70 border-opacity-10"
               key={data._id}
-              onClick={()=>{
-              handleClick(data);
-              }}
+              
               >
+                <div onClick={()=>{handleClick(data)}} className='bg-inherit  flex flex-col items-start px-2 py-4 hover:bg-gray-300 hover:rounded-2xl cursor-pointer'>
                 <h1 className='text-1xl font-bold '>{data.name}</h1>
                 <h1 className='text-[.8em] text-gray-500'>{data.email}</h1>
+                </div>
+                <div onClick={()=>deleteUser(data._id)} className='bg-inherit p-4 hover:bg-gray-300 rounded-full cursor-pointer'>
+                <FaTrash />
+                </div>
               </div>
             ))}
             </CardContent>
+            <CardFooter>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button className='w-max'>add new user</Button>
+                </DialogTrigger>
+                <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
+                  <DialogHeader >
+                    <DialogTitle  className='w-full flex flex-col gap-4'>
+                    <Label>Name:</Label>
+                    <Textarea placeholder='name' className='h-5' onChange={(e)=>setNewUser(e.target.value)}/>
+                    </DialogTitle>
+                  </DialogHeader>
+                  <DialogFooter >
+                    <DialogTitle  className='w-full flex flex-col gap-4'>
+                    <Label>Email:</Label>
+                    <Textarea placeholder='email' className='h-5' onChange={(e)=>setNewEmail(e.target.value)}/>
+                    </DialogTitle>
+                  </DialogFooter>
+                  <Button onClick={()=>handleNewUser(newuser,newemail)}>Submit</Button>
+                </DialogContent>
+              </Dialog>
+            </CardFooter>
           </Card>
           
         </div>
