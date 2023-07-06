@@ -8,7 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Tabs, TabsTrigger, TabsList, TabsContent } from '@/components/ui/tabs'
+import { 
+  Tabs,
+  TabsTrigger,
+  TabsList,
+  TabsContent 
+} from '@/components/ui/tabs'
 import {
   Table,
   TableBody,
@@ -17,7 +22,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogFooter, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger 
+} from "@/components/ui/dialog";
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -28,8 +41,6 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { FaTrash } from 'react-icons/fa'
 import { Label } from '@/components/ui/label'
-
-
 
 
 
@@ -151,8 +162,12 @@ const handleNewUser = async (username:String,email:String) => {
 
   return (
     <div className='w-full max-w-[1600px] flex flex-col gap-8 p-4'>
-      <header className='flex gap-4 border-[1px] border-opacity-10 border-slate-400 shadow-md p-4 rounded-md'>
+      <header className='flex flex-col gap-2 border-[1px] border-opacity-10 border-slate-400 shadow-md p-4 rounded-md'>
         <h1 className='text-3xl font-bold tracking-tight text_color'>Dashboard</h1>
+        <div className="text-slate-500 flex gap-2 text-[.90rem]">
+        <Link href="/">Home</Link>
+        <p>/ Our Dashboard</p>
+      </div>
       </header>
       <main className='flex flex-col gap-4'>
         {/* Cards */}
@@ -209,9 +224,10 @@ const handleNewUser = async (username:String,email:String) => {
           <Tabs defaultValue="task" className='bg-inherit text-inherit flex flex-col gap-2'>
             <TabsList className='bg-inherit text-inherit border-[1px] border-slate-400 w-max'>
               <TabsTrigger value='task'>Tasks</TabsTrigger>
-              <TabsTrigger value='graph'>Graph</TabsTrigger>
             </TabsList>
             <TabsContent value='task'>
+
+              {/* Table that display them all */}
               <div className="flex flex-col w-full">
                 <Table className="w-full h-[300px] bg-inherit text-inherit border-[1px] border-slate-300 shadow-md border-opacity-10" >
                   <TableHeader >
@@ -222,6 +238,8 @@ const handleNewUser = async (username:String,email:String) => {
                     </TableRow>
                   </TableHeader>
                   <TableBody className="bg-inherit text-inherit">
+
+                   {/* through the post of the user if only they have post. */}
                   {currentuser && currentuser.Post.map((post:any)=>{
                     return(
                       <TableRow key={post._id} className="">
@@ -268,46 +286,45 @@ const handleNewUser = async (username:String,email:String) => {
                         </TableCell>
                       </TableRow>)})}
                   </TableBody>
+
                 </Table>
               </div>
-            </TabsContent>
-            <TabsContent value='graph'>
             </TabsContent>
           </Tabs>
           
           {/* Input box user can use to add task */}
-          {currentuser &&  <Dialog>
+          {currentuser &&  
+            <Dialog>
               <DialogTrigger asChild>                
                 <Button className='max-w'>add new task</Button>
               </DialogTrigger>
               <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
                 <DialogHeader>
                   <DialogTitle className="py-2 text-2xl">
-                  <Textarea
-                  value={Post.title}
-                  onChange={(e) => setPost({ ...Post, title: e.target.value })}
-                  className=" h-5"/>
+                    <Textarea
+                    value={Post.title}
+                    onChange={(e) => setPost({ ...Post, title: e.target.value })}
+                    className=" h-5"/>
                   </DialogTitle>
                 </DialogHeader>
                 <Separator/>
                 <Textarea 
-                className=" h-40" 
-                value={Post.description}
-          onChange={(e) =>
-            setPost({ ...Post, description: e.target.value })}/>
+                  className=" h-40" 
+                  value={Post.description}
+                  onChange={(e) =>
+                    setPost({ ...Post, description: e.target.value })}/>
                 <DialogFooter>
-                <Button 
-                onClick={(e)=>handleNewDataSubmit(e,currentuser._id)
-                }
-                variant="outline" 
-                className='max-w'>add</Button>
+                  <Button 
+                    onClick={(e)=>handleNewDataSubmit(e,currentuser._id)}
+                    variant="outline" 
+                    className='max-w'>add</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            
           }
-          {/* Card that display the users */}
           </div>
+
+          {/* Card that display the users */}
           <Card className='w-full flex flex-col justify-between lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
             <CardHeader className='w-1/4'>
               <CardTitle>
@@ -356,7 +373,6 @@ const handleNewUser = async (username:String,email:String) => {
               </Dialog>
             </CardFooter>
           </Card>
-          
         </div>
       </main>
     </div>

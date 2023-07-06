@@ -27,11 +27,10 @@ const location = () => {
       <HeadLink name="Location" />
       <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-semibold sm:text-left text-center">
-            Metro Psych Facility (Metro Psychiatry Inc)
+            Pain & Rehab Care
           </h1>
           <p className="w-full font-semibold">
-            Address: <br /> 520 Ebden Bldg, Dr. Sixto Antonio Avenue, Maybunga,
-            Pasig Metro Manila Philippines
+            Address: <br /> SM Mega Mall B, EDSA Cor. Julia Vargas Avenue, Ortigas Center, Mandaluyong, 1550 Metro Manila
           </p>
         </div>
 
@@ -39,7 +38,7 @@ const location = () => {
         <div className="w-full h-[500px]">
           <iframe
             className="w-full h-[500px]"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1182.7726281557193!2d121.0833302053849!3d14.582324500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c7e3996bfedd%3A0x2fb3dd4254bd1073!2sMetro%20Psych%20Facility%20(Metro%20Psychiatry%20Inc)!5e1!3m2!1sen!2sph!4v1683669302781!5m2!1sen!2sph"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.2707338769824!2d121.05476331484002!3d14.583642989813283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c815fb9b732f%3A0xb9d114954f190640!2sPain%20%26%20Rehab%20Care!5e0!3m2!1sen!2sph!4v1688445946118!5m2!1sen!2sph"
             height="600"
             style={{ border: "0" }}
             loading="lazy"

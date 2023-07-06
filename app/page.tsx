@@ -8,11 +8,10 @@ const Home = () => {
     <div className="max-w-[1600px] w-full flex flex-row-reverse items-center justify-between gap-[100px] sm:px-16 px-0">
       <div className="relative md:opacity-100 opacity-50">
         <Image
-        loading="lazy"
+        placeholder="blur"
         alt="image"
-          src={bg}
-          className="w-full h-[500px] object-cover object-center animate-moving"
-          
+        src={bg}
+        className="w-full h-[500px] object-cover object-center animate-moving"
         />
       </div>
       <div className="flex-1 flex flex-col gap-[50px] w-full md:relative right-0 md:text-left text-center absolute">
