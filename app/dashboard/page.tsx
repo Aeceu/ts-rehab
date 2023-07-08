@@ -45,9 +45,7 @@ import { Label } from '@/components/ui/label'
 
 
 async function getData() {
-  const baseUrl =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; // Modify the base URL based on the environment
-
+  const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
   // Fetch data from the appropriate API route.
   const res = await fetch(`${baseUrl}/api/tasks`, {
     cache: "no-store",
@@ -89,9 +87,10 @@ const handleClick = (index: any) => {
 };
 
 const handleNewDataSubmit = async (e:React.FormEvent,userID:String) =>{
-  let name = currentuser.name;
   e.preventDefault();
-  const res = await fetch(`http://localhost:3000/api/tasks/${userID}`,{
+  let name = currentuser.name;
+  const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
+  const res = await fetch(`${baseUrl}/api/tasks/${userID}`,{
     method:"POST",
     headers:{
       "Content-type":"application/json",
@@ -108,7 +107,8 @@ const handleNewDataSubmit = async (e:React.FormEvent,userID:String) =>{
 const handleUpdateData = async (id:any,title:String,description:String)=>{
     try 
     {
-      const res = await fetch(`http://localhost:3000/api/tasks`,{
+      const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
+      const res = await fetch(`${baseUrl}/api/tasks`,{
          method:"PUT",
          headers:
           {
@@ -130,7 +130,8 @@ const deleteData = async (userID:String,postID:String) => {
   console.log("PARENT ID: ", userID);
   console.log("CHILD ID: ", postID);
   try {
-    const res = await fetch(`http://localhost:3000/api/tasks/${userID}/${postID}`, {
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
+    const res = await fetch(`${baseUrl}/api/tasks/${userID}/${postID}`, {
       method: "DELETE"
     });
   } catch (error) {
@@ -141,7 +142,8 @@ const deleteData = async (userID:String,postID:String) => {
 
 const deleteUser = async (userID:String)=>{
   try {
-    const res = await fetch(`http://localhost:3000/api/tasks/${userID}`, {
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
+    const res = await fetch(`${baseUrl}/api/tasks/${userID}`, {
       method:"DELETE"
     });
   } catch (error) {
@@ -152,7 +154,8 @@ const deleteUser = async (userID:String)=>{
 
 const handleNewUser = async (username:String,email:String) => {
   try {
-    const res = await fetch("http://localhost:3000/api/tasks",{
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
+    const res = await fetch(`${baseUrl}/api/tasks`,{
       method:"POST",
       headers:
       {
