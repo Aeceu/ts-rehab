@@ -4,7 +4,7 @@ import Task from "@/model/Task";
 import { Types } from "mongoose";
 
 
-export const GET =async (req:Request) => {
+export const GET = async (req:Request) => {
     try {
         await connect();
         const tasks = await Task.find()

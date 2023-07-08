@@ -45,15 +45,21 @@ import { Label } from '@/components/ui/label'
 
 
 async function getData() {
-  // fetch data from our api route.
-  const res = await fetch("http://localhost:3000/api/tasks",{
-    cache:"no-store",
+  const baseUrl =
+    process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; // Modify the base URL based on the environment
+
+  // Fetch data from the appropriate API route.
+  const res = await fetch(`${baseUrl}/api/tasks`, {
+    cache: "no-store",
   });
-  if (!res.ok){
+
+  if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
+
   return res.json();
 }
+
 
 const dashboard =  () => {
   const [currentuser,setCurrentUser] = useState<any>(null);
