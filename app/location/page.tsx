@@ -27,10 +27,10 @@ const location = () => {
       <HeadLink name="Location" />
       <div className="flex flex-col gap-2">
           <h1 className="text-2xl font-semibold sm:text-left text-center">
-            Pain & Rehab Care
+          Bridges of Hope Rehabilitation Center
           </h1>
           <p className="w-full font-semibold">
-            Address: <br /> SM Mega Mall B, EDSA Cor. Julia Vargas Avenue, Ortigas Center, Mandaluyong, 1550 Metro Manila
+            Address: <br /> Mariposa Street, 12 Orestes Ln, Quezon City, Metro Manila
           </p>
         </div>
 
@@ -38,7 +38,7 @@ const location = () => {
         <div className="w-full h-[500px]">
           <iframe
             className="w-full h-[500px]"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3861.2707338769824!2d121.05476331484002!3d14.583642989813283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397c815fb9b732f%3A0xb9d114954f190640!2sPain%20%26%20Rehab%20Care!5e0!3m2!1sen!2sph!4v1688445946118!5m2!1sen!2sph"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16012980.958701203!2d118.07606199535904!3d11.521758700756116!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b7c5310d413f%3A0x52a656d69a4b3782!2sBridges%20of%20Hope%20Rehabilitation%20Center!5e0!3m2!1sen!2sph!4v1688827978713!5m2!1sen!2sph"
             height="600"
             style={{ border: "0" }}
             loading="lazy"
