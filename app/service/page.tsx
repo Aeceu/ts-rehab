@@ -27,7 +27,7 @@ const Acts = [
 ];
 const services = () => {
   return (
-    <div className="max-w-[1600px] flex flex-col gap-14 lg:px-[60px] px-[10px] justify-center">
+    <div className="max-w-[1600px] flex flex-col gap-14 lg:px-[60px] px-[10px] justify-center overflow-hidden">
       {/* header */}
       <HeadLink name="Service" />
       {/* main content */}

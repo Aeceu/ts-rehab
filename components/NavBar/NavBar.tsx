@@ -33,6 +33,11 @@ const links = [
   },
   {
     id:6,
+    title: "Resources",
+    url: "/resources",
+  },
+  {
+    id:7,
     title: "Dashboard",
     url: "/dashboard",
   },

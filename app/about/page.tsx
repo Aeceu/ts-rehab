@@ -4,12 +4,13 @@ import pic1 from "public/bg4.jpg";
 import Reveal from "@/components/Reveal";
 const about = () => {
   return (
-    <div className="w-full max-w-[1600px] flex justify-between flex-col gap-8 md:px-[60px] px-5">
+    <div className="w-full max-w-[1600px] flex justify-between flex-col gap-8 md:px-[60px] px-5 overflow-hidden">
       <HeadLink name="About" />
 
       <div className="relative w-full h-[300px]">
         <Image
           // as="image"
+          placeholder="blur"
           src={pic1}
           alt="image"
           fill={true}
