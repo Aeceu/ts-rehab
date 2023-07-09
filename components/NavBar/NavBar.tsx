@@ -50,15 +50,15 @@ const NavBar = () => {
   }
   return (
     <nav className="w-full flex justify-between items-center p-8 shadow-md">
-      <Link href="/" className="text_color font-semibold text-[25px] lg:inline hidden">
+      <Link href="/" className="text_color font-semibold text-[25px] xl:inline hidden">
         Rehabify
       </Link>
       {/* Desktop Navigation Bar */}
       <ul
-        className={"lg:flex hidden  items-center gap-16 "
+        className={"xl:flex hidden  items-center gap-16 "
         }
       >
-        <FaTimes size="1.5rem" onClick={handleNav} className="lg:hidden flex" />
+        <FaTimes size="1.5rem" onClick={handleNav} className="xl:hidden flex" />
         {links.map((link) => (
           <Link key={link.id} href={link.url}>
             {link.title}
@@ -72,7 +72,7 @@ const NavBar = () => {
       {/* Mobile view */}
       <DropdownMenu>
         <DropdownMenuTrigger>
-        <div className="rounded-full shadow-md lg:hidden flex items-center p-2 justify-center relative">
+        <div className="rounded-full shadow-md xl:hidden flex items-center p-2 justify-center relative">
           <FaBars size="2rem" onClick={handleNav} className=" " />
         </div>
         </DropdownMenuTrigger>

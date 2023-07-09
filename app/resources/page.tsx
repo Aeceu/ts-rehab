@@ -20,6 +20,7 @@ function page() {
                   src={book.image }
                   fill={true}
                   className="rounded-t-lg"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   </div>
                   <div className="h-1/4 w-full flex flex-col justify-center items-center text-center p-2 text-[.9rem]  border-x-[1px] border-b-[1px] border-[#242424] rounded-b-lg gap-2">
