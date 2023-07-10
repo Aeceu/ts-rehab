@@ -138,39 +138,42 @@ const handleNewUser = async (username:String,email:String) => {
 }
 
   return (
-    <div className='flex gap-4 lg:flex-row flex-col-reverse'>
-
-    <div className=''>
-    {/*  Table that display the todo list of the user */}
-      <Tabs defaultValue="task" className='bg-inherit text-inherit  w-full lg:w-2/3 flex flex-col gap-4'>
-        <TabsList className='bg-inherit text-inherit border-[1px] border-slate-400 w-max'>
-          <TabsTrigger value='task'>Tasks</TabsTrigger>
-          <TabsTrigger value='graphs'>Graph</TabsTrigger>
-        </TabsList>
-        <TabsContent value='task'>
-          <Tasks
-          currentuser={currentuser}
-          Post={Post}
-          setPost={setPost}
-          handleUpdateData={handleUpdateData}
-          deleteData={deleteData}
-          handleNewDataSubmit={handleNewDataSubmit}/>
-        </TabsContent>
-        <TabsContent value='graphs'>
-          <h1>Graph...?</h1>
-        </TabsContent>
-      </Tabs>
-    </div>
-    <UsersCard
-    datas={datas}
-    handleClick={handleClick}
-    deleteUser={deleteUser}
-    handleNewUser={handleNewUser}
-    setNewUser={setNewUser}
-    setNewEmail={setNewEmail}
-    newuser={newuser}
-    newemail={newemail}
-    />
-  </div>
+    <>
+      <div className='flex gap-4 lg:flex-row flex-col-reverse'>
+        <div className='w-full lg:w-2/3 h-full'>
+        {/*  Table that display the todo list of the user */}
+          <Tabs defaultValue="task" className='bg-inherit text-inherit   flex flex-col gap-4'>
+            <TabsList className='bg-inherit text-inherit border-[1px] border-slate-400 w-max'>
+              <TabsTrigger value='task'>Tasks</TabsTrigger>
+              <TabsTrigger value='graphs'>Graph</TabsTrigger>
+            </TabsList>
+            <TabsContent value='task'>
+              <Tasks
+              currentuser={currentuser}
+              Post={Post}
+              setPost={setPost}
+              handleUpdateData={handleUpdateData}
+              deleteData={deleteData}
+              handleNewDataSubmit={handleNewDataSubmit}/>
+            </TabsContent>
+            <TabsContent value='graphs'>
+              <h1>Graph...?</h1>
+            </TabsContent>
+          </Tabs>
+        </div>
+        <div className='w-full lg:w-1/3 h-full'>
+          <UsersCard
+          datas={datas}
+          handleClick={handleClick}
+          deleteUser={deleteUser}
+          handleNewUser={handleNewUser}
+          setNewUser={setNewUser}
+          setNewEmail={setNewEmail}
+          newuser={newuser}
+          newemail={newemail}
+          />
+        </div>
+      </div>
+  </>
     )
 }

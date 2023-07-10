@@ -48,7 +48,7 @@ export const UsersCard: React.FC<UsersCardProps> = ({
     newemail
 }) => {
   return (
-    <Card className='w-full flex flex-col justify-between lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
+    <Card className='w-full flex flex-col justify-between  text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
       <CardHeader className='w-1/4'>
         <CardTitle>
           Users

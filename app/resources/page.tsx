@@ -16,6 +16,7 @@ function page() {
                   <div className="relative h-3/4 overflow-hidden"
                   >
                   <Image
+                  blurDataURL="blur"
                   alt="image"
                   src={book.image }
                   fill={true}
