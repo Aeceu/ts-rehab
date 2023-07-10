@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, {useContext} from 'react'
 
 import { 
     Dialog, 
@@ -24,6 +25,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { FaTrash } from 'react-icons/fa'
 import { Label } from '@/components/ui/label'
+import { ThemeContext } from '@/context/ThemeContext';
 
 
 interface UsersCardProps {
@@ -47,35 +49,38 @@ export const UsersCard: React.FC<UsersCardProps> = ({
     newuser,
     newemail
 }) => {
+  const {mode} = useContext(ThemeContext)
+  const color = mode === 'light' ? 'black' : 'white';
+
   return (
-    <Card className='w-full flex flex-col justify-between  text-inherit bg-inherit border-[1px] border-slate-300 shadow-md border-opacity-10'>
+    <Card className={`w-full h-full lg:h-[500px] flex flex-col justify-between  text-inherit bg-inherit border-[1px] border-${color} shadow-lg border-opacity-10`}>
       <CardHeader className='w-1/4'>
         <CardTitle>
           Users
         </CardTitle>
       </CardHeader>
-      <Separator/>
-      <CardContent className="w-full h-full flex flex-col gap-2 p-0">
+      <Separator className={`border-b-${color} border-b-[.5px] border-opacity-10`}/>
+      <CardContent className="w-full h-full flex flex-col gap-0 p-0">
       {/* Display all the users in the MongoDB database name datas. */}
       {datas.map((data:any)=>(
         <div
-        className="flex justify-between items-center p-2  bg-opacity-70 border-opacity-10"
+        className={`flex justify-between items-center p-2 border-opacity-10 border-b-[.5px] ${color === 'black' ? 'border-b-black' : 'border-b-white'}`}
         key={data._id}
-        >
-          <div onClick={()=>{handleClick(data)}} className='bg-inherit  flex flex-col  items-start px-[8px] py-[8px] hover:border-gray-300  hover:border-[1px] rounded-2xl cursor-pointer '>
+      >
+          <div onClick={()=>{handleClick(data)}} className={`flex flex-col  items-start px-[8px] py-[8px] rounded-2xl cursor-pointer ${color === 'black' ? "hover:border-black hover:border-[1px] hover:border-opacity-10" : "hover:border-white hover:border-[1px] hover:border-opacity-50"}`}>
           <h1 className='text-1xl font-bold '>{data.name}</h1>
           <h1 className='text-[.8em] text-gray-500'>{data.email}</h1>
           </div>
-          <div onClick={()=>deleteUser(data._id)} className='bg-inherit p-4 hover:border-gray-300 hover:border-[1px] rounded-full cursor-pointer'>
+          <div onClick={()=>deleteUser(data._id)} className={`bg-inherit p-4 ${color === 'black' ? "hover:border-black hover:border-[1px] hover:border-opacity-10" : "hover:border-white hover:border-[1px] hover:border-opacity-50"} rounded-full cursor-pointer`}>
           <FaTrash />
           </div>
         </div>
       ))}
       </CardContent>
-      <CardFooter className='p-2'>
+      <CardFooter className='py-4 px-2'>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className='w-max'>add new user</Button>
+            <Button variant="outline" className={`w-max font-semibold text-inherit border-[1px] border-${color} border-opacity-10 ${color === 'black' ? 'hover:bg-black hover:text-white hover:border-white':""}`}>add new user</Button>
           </DialogTrigger>
           <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
             <DialogHeader >

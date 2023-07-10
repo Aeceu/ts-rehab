@@ -1,6 +1,8 @@
-import React from 'react';
-// ... other imports
+"use client"
 
+import React ,{useContext} from 'react';
+
+import { ThemeContext } from '@/context/ThemeContext';
 import {
   Dialog,
   DialogContent,
@@ -52,11 +54,15 @@ const Tasks: React.FC<TasksProps> = ({
   deleteData,
   handleNewDataSubmit
 }) => {
+  
+  
+  const {mode} = useContext(ThemeContext)
+  const color = mode === 'light' ? 'black' : 'white';
   return (
     <div className="flex flex-col w-full gap-4">
-      <Table className="w-full h-[300px] bg-inherit text-inherit border-[1px] border-slate-300 shadow-md border-opacity-10" >
+      <Table className={`w-full h-[300px] bg-inherit text-inherit border-[1px] border-${color} border-opacity-10`} >
         <TableHeader >
-          <TableRow >
+          <TableRow className={`border-b-${color} border-b-[1px] border-opacity-10`}>
             <TableHead className="">Title</TableHead>
             <TableHead className="w-1/2">Description</TableHead>
             <TableHead className="w-1/4">Edit</TableHead>
@@ -65,7 +71,7 @@ const Tasks: React.FC<TasksProps> = ({
         <TableBody className="bg-inherit text-inherit">
           {currentuser && currentuser.Post.map((post) => {
             return (
-              <TableRow key={post._id} className="">
+              <TableRow key={post._id} className={`border-b-${color} border-b-[1px] border-opacity-10`}>
                 <TableCell>{post.title}</TableCell>
                 <TableCell>
                   <Dialog>
@@ -115,7 +121,7 @@ const Tasks: React.FC<TasksProps> = ({
       {currentuser &&
         <Dialog>
           <DialogTrigger asChild>
-            <Button className='max-w'>add new task</Button>
+            <Button className='w-max'>add new task</Button>
           </DialogTrigger>
           <DialogContent className='w-full lg:w-1/3 text-inherit bg-inherit border-[1px] border-slate-300 shadow-md bg-slate-800 text-2xl font-semibold text-white'>
             <DialogHeader>

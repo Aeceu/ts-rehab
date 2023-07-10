@@ -1,6 +1,6 @@
 "use client"
-import React, {useState,useEffect} from 'react'
-
+import React, {useState,useEffect, useContext} from 'react'
+import axios from 'axios';
 import { 
   Tabs,
   TabsTrigger,
@@ -14,17 +14,15 @@ import UsersCard from "@/components/UsersCard";
 
 
 async function getData() {
-  const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
   // Fetch data from the appropriate API route.
-  const res = await fetch(`${baseUrl}/api/tasks`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
+  try {
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:4200" : ""; 
+    const res = await axios.get(`${baseUrl}/user`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
   }
 
-  return res.json();
 }
 export default function TableTask() {
   const [currentuser,setCurrentUser] = useState<any>(null);
@@ -57,17 +55,8 @@ const handleClick = (index: any) => {
 const handleNewDataSubmit = async (e:React.FormEvent,userID:String) =>{
   e.preventDefault();
   let name = currentuser.name;
-  const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
-  const res = await fetch(`${baseUrl}/api/tasks/${userID}`,{
-    method:"POST",
-    headers:{
-      "Content-type":"application/json",
-    },
-    body:JSON.stringify({
-      name,
-      Post
-    })
-  })
+  const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:4200" : ""; 
+  await axios.post(`${baseUrl}/user/tasks`,{name,Post})
   setPost({title:"",description:""});
   window.location.reload();
 }
@@ -75,15 +64,9 @@ const handleNewDataSubmit = async (e:React.FormEvent,userID:String) =>{
 const handleUpdateData = async (id:any,title:String,description:String)=>{
     try 
     {
-      const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
-      const res = await fetch(`${baseUrl}/api/tasks`,{
-         method:"PUT",
-         headers:
-          {
-            "Content-type":"application/json",
-          },
-         body: JSON.stringify({ id, title, description })})
-      const data = await res.json();
+      const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:4200" : ""; 
+      const res =  await axios.put(`${baseUrl}/user`,{id,title,description})    
+      const data = await res.data;
       setPost({ title: data.title, description: data.description });
    } 
    catch (error) 
@@ -95,13 +78,9 @@ const handleUpdateData = async (id:any,title:String,description:String)=>{
 };
 
 const deleteData = async (userID:String,postID:String) => {
-  console.log("PARENT ID: ", userID);
-  console.log("CHILD ID: ", postID);
   try {
-    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
-    const res = await fetch(`${baseUrl}/api/tasks/${userID}/${postID}`, {
-      method: "DELETE"
-    });
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:4200" : ""; 
+    await axios.delete(`${baseUrl}/user/tasks`,{data:{userID,postID}})
   } catch (error) {
     console.error(error);
   }
@@ -110,27 +89,18 @@ const deleteData = async (userID:String,postID:String) => {
 
 const deleteUser = async (userID:any)=>{
   try {
-    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
-    const res = await fetch(`${baseUrl}/api/tasks/${userID}`, {
-      method:"DELETE"
-    });
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:4200" : ""; 
+    await axios.delete(`${baseUrl}/user`,{data:{userID}})
   } catch (error) {
     console.error(error);
   }
   window.location.reload();
 };
 
-const handleNewUser = async (username:String,email:String) => {
+const handleNewUser = async (name:String,email:String) => {
   try {
-    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; 
-    const res = await fetch(`${baseUrl}/api/tasks`,{
-      method:"POST",
-      headers:
-      {
-        "Content-type":"application/json"
-      },
-      body:JSON.stringify({username,email})
-    })
+    const baseUrl = process.env.NODE_ENV === "development" ? "http://localhost:4200" : ""; 
+    await axios.post(`${baseUrl}/user`,{name,email})
   } catch (error) {
     console.error(error);
   }
@@ -140,9 +110,9 @@ const handleNewUser = async (username:String,email:String) => {
   return (
     <>
       <div className='flex gap-4 lg:flex-row flex-col-reverse'>
-        <div className='w-full lg:w-2/3 h-full'>
+        <div className='w-full h-full'>
         {/*  Table that display the todo list of the user */}
-          <Tabs defaultValue="task" className='bg-inherit text-inherit   flex flex-col gap-4'>
+          <Tabs defaultValue="task" className={`bg-inherit text-inherit   flex flex-col gap-4`}>
             <TabsList className='bg-inherit text-inherit border-[1px] border-slate-400 w-max'>
               <TabsTrigger value='task'>Tasks</TabsTrigger>
               <TabsTrigger value='graphs'>Graph</TabsTrigger>
@@ -177,3 +147,19 @@ const handleNewUser = async (username:String,email:String) => {
   </>
     )
 }
+
+
+
+
+{/* <div className='w-full lg:w-1/3 h-full'>
+  <UsersCard
+  datas={datas}
+  handleClick={handleClick}
+  deleteUser={deleteUser}
+  handleNewUser={handleNewUser}
+  setNewUser={setNewUser}
+  setNewEmail={setNewEmail}
+  newuser={newuser}
+  newemail={newemail}
+  />
+</div> */}
