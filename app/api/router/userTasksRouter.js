@@ -6,8 +6,9 @@ const router = express.Router();
 
 router.get("/",async(req,res)=>{
     try {
-        const tasks = await Tasks.find();
-        res.sendStatus(201)
+        const {email} = await req.body;
+        const tasks = await Tasks.findOne({email});
+        res.send(tasks)
     } catch (error) {
         console.error(error);
     }

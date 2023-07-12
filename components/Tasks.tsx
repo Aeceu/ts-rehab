@@ -60,9 +60,9 @@ const Tasks: React.FC<TasksProps> = ({
   const color = mode === 'light' ? 'black' : 'white';
   return (
     <div className="flex flex-col w-full gap-4">
-      <Table className={`w-full h-[300px] bg-inherit text-inherit border-[1px] border-${color} border-opacity-10`} >
+      <Table className={`w-full h-[300px] bg-inherit text-inherit border-[1px] border-${color} border-opacity-30`} >
         <TableHeader >
-          <TableRow className={`border-b-${color} border-b-[1px] border-opacity-10`}>
+          <TableRow className={`border-b-${color} border-b-[1px] border-opacity-30`}>
             <TableHead className="">Title</TableHead>
             <TableHead className="w-1/2">Description</TableHead>
             <TableHead className="w-1/4">Edit</TableHead>
@@ -71,7 +71,7 @@ const Tasks: React.FC<TasksProps> = ({
         <TableBody className="bg-inherit text-inherit">
           {currentuser && currentuser.Post.map((post) => {
             return (
-              <TableRow key={post._id} className={`border-b-${color} border-b-[1px] border-opacity-10`}>
+              <TableRow key={post._id} className={`border-b-${color} border-b-[1px] border-opacity-30`}>
                 <TableCell>{post.title}</TableCell>
                 <TableCell>
                   <Dialog>
